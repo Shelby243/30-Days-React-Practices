@@ -21,6 +21,7 @@ const buttonStyles = {
   cursor: 'pointer',
   fontSize: 18,
   color: 'white',
+
 }
 class Header extends React.Component{
   constructor(props){
@@ -36,7 +37,7 @@ class Header extends React.Component{
       date
     }=this.props.data
     return(
-      <header>
+      <header style={this.props.style}>
         <div className='header-wrapper'>
           <h1>{welcome}</h1>
           <h2>{title}</h2>
@@ -84,7 +85,7 @@ class Main extends React.Component{
             style={buttonStyles}
           />
           <Button
-            text='Change BackGround'
+            text={this.props.texto}
             onClick={this.props.changeBackground}
             style={buttonStyles}
           />
@@ -98,6 +99,11 @@ class Main extends React.Component{
              style={buttonStyles}
              onClick={this.props.minusOne}
            />
+           <Button
+           text={this.props.text}
+           style={buttonStyles}
+           onClick={this.props.handleLogin}
+           />
 
         </div>
       </main>
@@ -105,20 +111,14 @@ class Main extends React.Component{
   }
 }
 class Footer extends React.Component{
-  state={
-    count:0,
-    styles:{
-      backgroundColor:'',
-      color:''
-    }
-  }
+  
   constructor(props){
     super(props)
   }
   render(){
     return(
-      <footer>
-        <div style={this.state.styles}  className='footer-wrapper'>
+      <footer style={this.props.style}>
+        <div  className='footer-wrapper'>
           <p>Copyright {this.props.date.getFullYear()}</p>
         </div>
       </footer>
@@ -131,7 +131,8 @@ class App extends React.Component{
     styles:{
       backgroundColor:'',
       color:''
-    }
+    },
+    loggedIn:false
   }
   addOne=()=>this.setState({count:this.state.count + 1})
   minusOne=()=>this.setState({count:this.state.count - 1})
@@ -162,8 +163,11 @@ class App extends React.Component{
     alert('Welcome to 30 Days Of React Challenge, 2020')
   }
 changeBackground=()=>{  
-  this.setState({styles:this.setState.styles={backgroundColor:'#2233a3',color:''}})
+  this.setState({styles:this.setState.styles={backgroundColor:'#1f2244'}})
   console.log(5)
+}
+handleLogin=()=>{
+  this.setState({loggedIn:!this.state.loggedIn})
 }
   render(){
     const count=this.state.count
@@ -181,13 +185,28 @@ changeBackground=()=>{
     }
     const techs = ['HTML', 'CSS', 'JavaScript']
     const user={...data.author, image:pic}
+    const stile=this.state.styles
+    const log=this.state.loggedIn
+    let status=this.state.loggedIn?(<h1>Welcome To 30 Days Of React</h1>):(<h3>Please Login</h3>)
+    let text=this.state.loggedIn?('Logout'):('Login')
+    let texto
+    
+    if(this.state.styles.backgroundColor==='')
+    {
+      texto='Change BackGround'
+    }
+    else{
+      
+      texto='Back'
+    }
     return(
       
-      < div  style={this.state.styles} className='app'>
+      < div style={stile}  className='app'>
        
-        <Header  data={data}/>
+        <Header style={stile}  data={data}/>
+        {status}
         <Main 
-        style={this.state.styles}
+        
         count={count}
         txt1={txt1}
         txt2={txt2}
@@ -198,8 +217,12 @@ changeBackground=()=>{
         addOne={this.addOne}
         minusOne={this.minusOne}
         changeBackground={this.changeBackground}
+        handleLogin={this.handleLogin}
+        text={text}
+        texto={texto}
+        log={log}
         />
-        <Footer style={this.state.styles} date={new Date()}/>
+        <Footer style={stile}  date={new Date()}/>
       </div>
       
     )
