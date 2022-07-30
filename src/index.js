@@ -181,6 +181,7 @@ class App extends React.Component{
       'October',
       'November',
       'December',
+      
     ]
     const month = months[time.getMonth()].slice(0, 3)
     const year = time.getFullYear()
