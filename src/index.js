@@ -1,14 +1,36 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-constructor */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import pic from './images/picture2.jpeg'
-const UserCard=({count,user:{firstName,lastName,image}})=>(
-  <div className='user-card'>
-    <img src={image} alt={firstName}/>
-    <h2>{firstName} {lastName}</h2>
-    <h3>Followers: {count}</h3>
+import pic from  './images/picture2.jpeg'
+import { countriesData } from './data/countries'
+/*const UserCard=({text})=>(
+  <div className='user-card' >
+    <Img/>
+    <h2>{text}</h2>
+    
   </div>
 )
+const Img=()=>(
+  <div>
+    <img src={pic} alt=''/>
+  </div>
+  
+)*/
+const Country=({name,capital,flag,population,currency})=>{
+  return(
+    <div className='user-card' >
+      <img src={flag} alt={name}/>
+      <h2>{name}</h2>
+      <h3><b>Capital:</b>{capital}</h3>
+      <h3><b>Population:</b>{population}</h3>
+      <h3><b>Currency:</b>{currency}</h3>
+
+    </div>
+  )
+}
 const Button=({text,onClick,style})=>(
   <button style={style} onClick={onClick}>{text}</button>
 )
@@ -21,6 +43,7 @@ const buttonStyles = {
   cursor: 'pointer',
   fontSize: 18,
   color: 'white',
+  
 
 }
 class Header extends React.Component{
@@ -49,13 +72,13 @@ class Header extends React.Component{
     )
   }
 }
-class TechList extends React.Component{
+/*class TechList extends React.Component{
   render(){
     const {techs}=this.props
     const techsFormatted=techs.map((tech)=><li key={tech}>{tech}</li>)
     return techsFormatted
   }
-}
+}*/
 class Main extends React.Component{
   constructor(props){
     super(props)
@@ -66,43 +89,31 @@ class Main extends React.Component{
 
       <main>
         <div className='main-wrapper'>
-          <p>Prerequisite to get Started react.js:</p>
-          <ul>
-            <TechList techs={this.props.techs}/>
-          </ul>
-          <UserCard 
-            user={this.props.user}
-            count={this.props.count}
+          
+          
+          <Country 
+          name={this.props.name}
+          capital={this.props.capital}
+          population={this.props.population}
+          flag={this.props.flag}
+          currency={this.props.currency}
           />
-          <Button 
-          text='Greet People'
-          onClick={this.props.greetPeople}
-          style={buttonStyles}
-          />
-          <Button
-            text='Show Time'
-            onClick={this.props.handleTime}
-            style={buttonStyles}
-          />
-          <Button
-            text={this.props.texto}
-            onClick={this.props.changeBackground}
-            style={buttonStyles}
-          />
-          <Button
-             text={this.props.txt1}
-             style={buttonStyles}
-             onClick={this.props.addOne}
-           />
+          </div>
+          <div>
            <Button
-             text={this.props.txt2}
-             style={buttonStyles}
-             onClick={this.props.minusOne}
-           />
-           <Button
-           text={this.props.text}
+           text={this.props.texto}
            style={buttonStyles}
-           onClick={this.props.handleLogin}
+           onClick={this.props.changeBackground}
+           />
+           <Button
+           text='Select Country'
+           style={buttonStyles}
+           onClick={this.props.handleSelect}
+           />
+           <Button
+           text='Add One'
+           style={buttonStyles}
+           onClick={this.props.addOne}
            />
 
         </div>
@@ -126,15 +137,35 @@ class Footer extends React.Component{
   }
 }
 class App extends React.Component{
-  state={
+ /* state={
     count:0,
     styles:{
       backgroundColor:'',
       color:''
     },
     loggedIn:false
+  }*/
+ state={
+    
+    name:countriesData[0].name,
+    capital:countriesData[0].capital,
+    
+    population:countriesData[0].population,
+    flag:countriesData[0].flag,
+    currency:countriesData[0].currency,
+    count:0,
+    styles:{
+      backgroundColor:'',
+      color:''
+    },
+    loggedIn:false
+    
   }
-  addOne=()=>this.setState({count:this.state.count + 1})
+  
+  addOne=()=>{
+    this.setState({count:this.state.count + 1})
+    
+  }
   minusOne=()=>this.setState({count:this.state.count - 1})
   showDate = (time) => {
     const months = [
@@ -163,14 +194,30 @@ class App extends React.Component{
     alert('Welcome to 30 Days Of React Challenge, 2020')
   }
 changeBackground=()=>{  
-  this.setState({styles:this.setState.styles={backgroundColor:'#1f2244'}})
-  console.log(5)
+  this.setState({
+    styles:this.setState.styles={backgroundColor:'#1f2244'},
+    loggedIn:!this.state.loggedIn
+  })
+  console.log(this.addOne())
 }
 handleLogin=()=>{
   this.setState({loggedIn:!this.state.loggedIn})
 }
+handleSelect=()=>{
+  
+  
+    this.setState({
+      name:this.setState={name:countriesData[1].name},
+      capital:this.setState={capital:countriesData[1].capital},
+      population:this.setState={capital:countriesData[1].population},
+      flag:this.setState={flag:countriesData[1].flag},
+      currency:this.setState={currency:countriesData[1].currency},
+    })
+  
+  
+}
   render(){
-    const count=this.state.count
+    const count1=this.state.count
     const txt1='Add One'
     const txt2='Minus One'
     const data={
@@ -185,29 +232,45 @@ handleLogin=()=>{
     }
     const techs = ['HTML', 'CSS', 'JavaScript']
     const user={...data.author, image:pic}
-    const stile=this.state.styles
-    const log=this.state.loggedIn
-    let status=this.state.loggedIn?(<h1>Welcome To 30 Days Of React</h1>):(<h3>Please Login</h3>)
-    let text=this.state.loggedIn?('Logout'):('Login')
-    let texto
     
-    if(this.state.styles.backgroundColor==='')
+    const log=this.state.loggedIn
+   /* let status=this.state.loggedIn?(<h1>Welcome To 30 Days Of React</h1>):(<h3>Please Login</h3>)
+    let text=this.state.loggedIn?('Logout'):('Login')*/
+    // eslint-disable-next-line no-undef, no-global-assign
+    
+    let texto
+    let stile
+    if(this.state.loggedIn && this.state.styles)
     {
-      texto='Change BackGround'
+      stile=this.state.styles
+      texto='Back'
+      
     }
     else{
-      
-      texto='Back'
+      stile=this.state.styles
+      texto='Change BackGround'
     }
+  const name=this.state.name
+  const capital=this.state.capital
+  const population=this.state.population
+  const flag=this.state.flag
+  const currency=this.state.currency
     return(
       
       < div style={stile}  className='app'>
        
         <Header style={stile}  data={data}/>
-        {status}
+      
         <Main 
-        
-        count={count}
+       
+        name={name}
+        capital={capital}
+        population={population}
+        flag={flag}
+        currency={currency}
+
+
+        count1={count1}
         txt1={txt1}
         txt2={txt2}
         user={user}
@@ -218,8 +281,9 @@ handleLogin=()=>{
         minusOne={this.minusOne}
         changeBackground={this.changeBackground}
         handleLogin={this.handleLogin}
-        text={text}
+        handleSelect={this.handleSelect}
         texto={texto}
+        
         log={log}
         />
         <Footer style={stile}  date={new Date()}/>
