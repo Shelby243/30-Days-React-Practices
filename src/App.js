@@ -27,7 +27,11 @@ class App extends React.Component{
          color:''
        },
        loggedIn:false,
-       firstName:''
+       firstName:'',
+       lastName:'',
+       country:'',
+       title:'',
+       index:0
        
      }
      
@@ -74,25 +78,33 @@ class App extends React.Component{
      this.setState({loggedIn:!this.state.loggedIn})
    }
    handleSelect=()=>{
-    countriesData.forEach((element)=>{
+    const rndNumber=()=>{
+      let random=Math.floor(Math.random()*countriesData.length)
+      return random
+    }
+    let randomNumber=rndNumber()
+    
       this.setState({
-        name:element.name,
-        capital:element.capital,
-        population:element.population,
-        flag:element.flag,
-        currency:element.currency,
+        index:randomNumber
       })
-    })
+    
     
      
        
    }
    handleChange=(e)=>{
-    const value=e.target.value
-    this.setState({firstName:value})
+    const {name, value}=e.target
+    
+    this.setState({[name]:value})
+   }
+   handleSubmit=(e)=>{
+    e.preventDefault()
+
+    console.log(this.state)
    }
      render(){
-        const firstName=this.state.firstName
+
+       const {firstName,lastName,title,country}=this.state
        const count1=this.state.count
        const txt1='Add One'
        const txt2='Minus One'
@@ -126,11 +138,11 @@ class App extends React.Component{
         
          texto='Change Background'
        }
-     const name=this.state.name
-     const capital=this.state.capital
-     const population=this.state.population
-     const flag=this.state.flag
-     const currency=this.state.currency
+     const name=countriesData[this.state.index].name
+     const capital=countriesData[this.state.index].capital
+     const population=countriesData[this.state.index].population
+     const flag=countriesData[this.state.index].flag
+     const currency=countriesData[this.state.index].currency
        return(
          
          < div style={stile}  className='app'>
@@ -163,8 +175,12 @@ class App extends React.Component{
            log={log}
 
            firstName={firstName}
-           value={firstName}
+           
            handleChange={this.handleChange}
+           lastName={lastName}
+           title={title}
+           country={country}
+           handleSubmit={this.handleSubmit}
            />
            
            <Footer style={stile}  date={new Date()}/>

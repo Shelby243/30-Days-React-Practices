@@ -1,12 +1,11 @@
-const Input=({value,onChange})=>{
+import React from 'react'
+const Input=({onChange,value1,name,placeholder})=>{
     return(
         <div>
             <input 
             type='text'
-            id='firstName'
-            placeholder="First Name"
-            name="firstName"
-            value={value}
+            placeholder={placeholder}
+            name={name}
             onChange={onChange}
             
             />
