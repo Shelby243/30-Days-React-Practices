@@ -4,7 +4,7 @@
 /* eslint-disable no-useless-constructor */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import App1 from './App1'
 
 /*const UserCard=({text})=>(
   <div className='user-card' >
@@ -27,4 +27,4 @@ const Img=()=>(
 
 
 const rootElement=document.getElementById("root")
-ReactDOM.render(<App/>,rootElement)
+ReactDOM.render(<App1/>,rootElement)
