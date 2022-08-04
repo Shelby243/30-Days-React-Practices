@@ -49,6 +49,10 @@ class App1 extends React.Component{
         css: false,
         javascript: false,
         },
+        touched:{
+            firstName:false,
+            lastName:false,
+        },
      }
 
      handleChange=(e)=>{
@@ -66,6 +70,8 @@ class App1 extends React.Component{
             this.setState({[name]:value})
         }
      }
+    
+    
      handleSubmit=(e)=>{
         e.preventDefault()
         const {
@@ -149,7 +155,9 @@ class App1 extends React.Component{
                 checked={gender}
                 valbio={bio}
                 country={country}
+               
                 
+
                 />
                 <Footer date={new Date()}/>
 

@@ -13,7 +13,7 @@ class Main1 extends React.Component{
         <main>
             <div className='main-wrapper'>
                 <h3>Add Student</h3>
-                <form onSubmit={this.props.handleSubmit}>
+                <form onSubmit={this.props.handleSubmit} noValidate={this.props.validate}>
                     <div className='row'>
                         <div className='form-group'>
                             <label htmlFor='firstName'>First Name </label>
@@ -22,6 +22,7 @@ class Main1 extends React.Component{
                             name='firstName'
                             value={this.props.valfname}
                             onChange={this.props.handleChange}
+                            onBlur={this.props.handleBlur}
                             placeholder='First Name'
                             />
 
@@ -88,10 +89,11 @@ class Main1 extends React.Component{
                             placeholder='Weight in Kg'
                             />
                         </div>
-                        <div>
+                        <div >
                             <label htmlFor='country'>Country</label> <br />
-                            <select name='country' onChange={this.handleChange} id='country'>
+                            <select name='country'  onChange={this.handleChange}  id='country'>
                             {this.props.selectedOptions}
+                            
                             </select>
                         </div>
                         <div>
