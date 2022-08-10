@@ -102,6 +102,7 @@ class App extends React.Component{
 
     console.log(this.state)
    }
+   
      render(){
 
        const {firstName,lastName,title,country}=this.state

@@ -4,7 +4,8 @@
 /* eslint-disable no-useless-constructor */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App1 from './App1'
+import { BrowserRouter } from 'react-router-dom'
+import App3 from './App3'
 
 /*const UserCard=({text})=>(
   <div className='user-card' >
@@ -27,4 +28,6 @@ const Img=()=>(
 
 
 const rootElement=document.getElementById("root")
-ReactDOM.render(<App1/>,rootElement)
+ReactDOM.render(<BrowserRouter>
+                  <App3/>
+                </BrowserRouter>,rootElement)
